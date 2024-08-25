@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:login/views/home.dart'; // Import the HomePage
+import 'package:login/views/home.dart';
 import 'package:login/views/register_page.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:get/get.dart';
@@ -16,6 +16,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  bool _obscureText = true; // State to manage password visibility
 
   @override
   Widget build(BuildContext context) {
@@ -54,13 +55,24 @@ class _LoginPageState extends State<LoginPage> {
                       obscureText: false,
                       controller: _emailController,
                     ),
-                    const SizedBox(
-                      height: 20,
-                    ),
+                    const SizedBox(height: 20),
                     InputWidget(
                       hintText: 'Password',
-                      obscureText: true,
+                      obscureText: _obscureText,
                       controller: _passwordController,
+                      suffixIcon: IconButton(
+                        icon: Icon(
+                          _obscureText
+                              ? Icons.visibility_off
+                              : Icons.visibility,
+                          color: Colors.grey,
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            _obscureText = !_obscureText;
+                          });
+                        },
+                      ),
                     ),
                     const SizedBox(height: 20),
                     ElevatedButton(

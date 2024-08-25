@@ -7,11 +7,13 @@ class InputWidget extends StatelessWidget {
     required this.hintText,
     required this.controller,
     required this.obscureText,
+    this.suffixIcon, // Added suffixIcon parameter
   });
 
   final String hintText;
   final TextEditingController controller;
   final bool obscureText;
+  final Widget? suffixIcon; // Optional suffixIcon
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +27,7 @@ class InputWidget extends StatelessWidget {
             color: Colors.grey.withOpacity(0.2), // Subtle shadow for depth
             spreadRadius: 2,
             blurRadius: 5,
-            offset: const Offset(0, 3), // changes position of shadow
+            offset: const Offset(0, 3), // Changes position of shadow
           ),
         ],
       ),
@@ -43,6 +45,7 @@ class InputWidget extends StatelessWidget {
           ),
           contentPadding: const EdgeInsets.symmetric(
               horizontal: 20, vertical: 15), // Padding for comfortable typing
+          suffixIcon: suffixIcon, // Display suffixIcon if provided
         ),
         style: GoogleFonts.poppins(), // Consistent font style
       ),
