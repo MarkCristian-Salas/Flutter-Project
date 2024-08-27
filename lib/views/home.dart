@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'profile_page.dart'; // Import the profile page
+import 'notif_page.dart';
 
 class HomePage extends StatelessWidget {
   @override
@@ -11,7 +12,13 @@ class HomePage extends StatelessWidget {
         actions: [
           IconButton(
             icon: Icon(Icons.notifications),
-            onPressed: () {},
+            onPressed: () {
+              // Navigate to NotificationPage when the notification icon is pressed
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => NotificationPage()),
+              );
+            },
           ),
           IconButton(
             icon: Icon(Icons.person),
@@ -47,6 +54,8 @@ class HomePage extends StatelessWidget {
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
+        backgroundColor: const Color(0xFFE48F45),
         currentIndex: 0,
         items: [
           BottomNavigationBarItem(
@@ -66,9 +75,8 @@ class HomePage extends StatelessWidget {
             label: 'Payment',
           ),
         ],
-        selectedItemColor:
-            Color(0xFFE48F45), // Bottom nav bar selected item color
-        unselectedItemColor: Colors.grey,
+        selectedItemColor: Colors.black, // Bottom nav bar selected item color
+        unselectedItemColor: Colors.white,
       ),
     );
   }
