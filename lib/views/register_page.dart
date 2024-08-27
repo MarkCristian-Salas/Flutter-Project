@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:login/views/home.dart'; // Import the HomePage
+import 'package:login/views/home.dart'; 
 import 'package:login/views/login_page.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:get/get.dart';

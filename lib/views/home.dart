@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'profile_page.dart'; // Import the profile page
 
 class HomePage extends StatelessWidget {
   @override
@@ -11,6 +12,16 @@ class HomePage extends StatelessWidget {
           IconButton(
             icon: Icon(Icons.notifications),
             onPressed: () {},
+          ),
+          IconButton(
+            icon: Icon(Icons.person),
+            onPressed: () {
+              // Navigate to ProfilePage when the profile icon is pressed
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => ProfilePage()),
+              );
+            },
           ),
         ],
       ),
@@ -109,7 +120,7 @@ class BalanceCard extends StatelessWidget {
                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
             Align(
               alignment: Alignment.centerRight,
-              child: Text('', style: TextStyle(color: Colors.grey)),
+              child: Text('This week', style: TextStyle(color: Colors.grey)),
             ),
           ],
         ),
