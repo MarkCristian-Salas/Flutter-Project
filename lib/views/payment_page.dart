@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'profile_page.dart'; // Import the profile page
 import 'notif_page.dart'; // Import the notification page
-import 'post_Page.dart'; // Import the PostPage
-import 'job_page.dart'; // Import the JobPage
-import 'payment_page.dart';
+import 'home.dart'; // Import the home page
+import 'Post_Page.dart'; // Import the Post page
+import 'job_page.dart'; // Import the Job page
 
-class HomePage extends StatelessWidget {
+class PaymentPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Home'),
+        title: Text('Payment'),
         backgroundColor: Color(0xFFE48F45), // App bar color
         actions: [
           IconButton(
@@ -41,21 +41,19 @@ class HomePage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SearchAndFilter(),
+              BalanceCard(), // Current balance section, reusing the BalanceCard widget from home.dart
               SizedBox(height: 20),
-              BalanceCard(),
-              SizedBox(height: 20),
-              SectionTitle(title: 'Most Recent Job'),
+              SectionTitle(title: 'To Pay'),
               SizedBox(height: 10),
               JobCard(
                   description:
-                      'Details of the most recent job.'), // Placeholder for the job content
+                      'Job post details that need payment.'), // Placeholder for job posts to pay
               SizedBox(height: 20),
-              SectionTitleWithDropdown(title: 'Category'),
+              SectionTitle(title: 'To Receive Payment'),
               SizedBox(height: 10),
               JobCard(
                   description:
-                      'Job details by category.'), // Placeholder for category content
+                      'Job post details awaiting payment.'), // Placeholder for job posts to receive payment
             ],
           ),
         ),
@@ -63,7 +61,7 @@ class HomePage extends StatelessWidget {
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         backgroundColor: const Color(0xFFE48F45),
-        currentIndex: 0,
+        currentIndex: 3, // Set the current index to 'Payment'
         items: [
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
@@ -87,7 +85,11 @@ class HomePage extends StatelessWidget {
         onTap: (index) {
           switch (index) {
             case 0:
-              // Currently on HomePage, no navigation needed
+              // Navigate to HomePage when the Home tab is tapped
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => HomePage()),
+              );
               break;
             case 1:
               // Navigate to PostPage when the Post tab is tapped
@@ -97,74 +99,17 @@ class HomePage extends StatelessWidget {
               );
               break;
             case 2:
+              // Navigate to JobPage when the About Job tab is tapped
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => JobPage()),
               );
               break;
             case 3:
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => PaymentPage()),
-              );
+              // Currently on PaymentPage, no navigation needed
               break;
           }
         },
-      ),
-    );
-  }
-}
-
-class SearchAndFilter extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Expanded(
-          child: TextField(
-            decoration: InputDecoration(
-              hintText: 'Search',
-              prefixIcon: Icon(Icons.search),
-              filled: true,
-              fillColor: Colors.grey[200],
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10),
-                borderSide: BorderSide.none,
-              ),
-            ),
-          ),
-        ),
-        SizedBox(width: 10),
-        IconButton(
-          icon: Icon(Icons.filter_list),
-          onPressed: () {
-            Scaffold.of(context).openDrawer(); // Open drawer for filtering
-          },
-        ),
-      ],
-    );
-  }
-}
-
-class BalanceCard extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      color: Color(0xFFFFF4E6),
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text('Current Balance:', style: TextStyle(fontSize: 18)),
-            Text('₱ = 0.00',
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
-            Align(
-              alignment: Alignment.centerRight,
-              child: Text('This week', style: TextStyle(color: Colors.grey)),
-            ),
-          ],
-        ),
       ),
     );
   }
@@ -184,37 +129,6 @@ class SectionTitle extends StatelessWidget {
   }
 }
 
-class SectionTitleWithDropdown extends StatelessWidget {
-  final String title;
-
-  SectionTitleWithDropdown({required this.title});
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Text(
-          title,
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-        ),
-        DropdownButton<String>(
-          items:
-              <String>['Option 1', 'Option 2', 'Option 3'].map((String value) {
-            return DropdownMenuItem<String>(
-              value: value,
-              child: Text(value),
-            );
-          }).toList(),
-          onChanged: (_) {},
-          icon: Icon(Icons.arrow_drop_down),
-          underline: SizedBox(), // Removes the underline
-        ),
-      ],
-    );
-  }
-}
-
 class JobCard extends StatelessWidget {
   final String description;
 
@@ -223,15 +137,28 @@ class JobCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 100,
+      height: 100, // Consistent height for job cards
+      width: double.infinity, // Take full width of the parent
       decoration: BoxDecoration(
         color: Color(0xFFFFF4E6), // Light background color for job cards
         borderRadius: BorderRadius.circular(10),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.1),
+            blurRadius: 4,
+            offset: Offset(0, 2),
+          ),
+        ],
       ),
-      child: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Text(description),
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Align(
+          alignment: Alignment.center, // Align text to the center
+          child: Text(
+            description,
+            style: TextStyle(fontSize: 16),
+            overflow: TextOverflow.ellipsis, // Handle overflow if needed
+          ),
         ),
       ),
     );

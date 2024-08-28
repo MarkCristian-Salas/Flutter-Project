@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'profile_page.dart'; // Import the profile page
-import 'notif_page.dart';   // Import the notification page
-import 'home.dart';         // Import the home page
-import 'Post_Page.dart';    // Import the post page
+import 'notif_page.dart'; // Import the notification page
+import 'home.dart'; // Import the home page
+import 'post_page.dart'; // Import the post 
+import 'payment_page.dart';
 
 class JobPage extends StatelessWidget {
   @override
@@ -44,15 +45,15 @@ class JobPage extends StatelessWidget {
               SizedBox(height: 10),
               JobProgressBar(),
               SizedBox(height: 10),
-              JobCard(description: 'Your current job in progress here.'), // Placeholder for current job content
+              JobCard(description: 'Your current job in progress here.'),
               SizedBox(height: 20),
               SectionTitle(title: 'Pending Job/s'),
               SizedBox(height: 10),
-              JobCard(description: 'Pending job details here.'), // Placeholder for pending jobs
+              JobCard(description: 'Pending job details here.'),
               SizedBox(height: 20),
               SectionTitle(title: 'Job/s Posted'),
               SizedBox(height: 10),
-              JobCard(description: 'Your posted job details here.'), // Placeholder for posted jobs
+              JobCard(description: 'Your posted job details here.'),
             ],
           ),
         ),
@@ -79,22 +80,34 @@ class JobPage extends StatelessWidget {
             label: 'Payment',
           ),
         ],
-        selectedItemColor: Colors.black, // Bottom nav bar selected item color
+        selectedItemColor: Colors.black,
         unselectedItemColor: Colors.white,
         onTap: (index) {
-          if (index == 0) {
-            // Navigate to HomePage when the Home tab is tapped
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => HomePage()),
-            );
-          } else if (index == 1) {
-            // Navigate to PostPage when the Post tab is tapped
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => PostPage()),
-            );
-          } // No action needed for index 2 as it's the current page
+          switch (index) {
+            case 0:
+              // Currently on HomePage, no navigation needed
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => HomePage()),
+              );
+              break;
+            case 1:
+              // Currently on HomePage, no navigation needed
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => PostPage()),
+              );
+              break;
+            case 2:
+              
+              break;
+            case 3:
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => PaymentPage()),
+              );
+              break;
+          }
         },
       ),
     );
@@ -154,14 +167,30 @@ class JobCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 100,
+      height: 100, // Set a consistent height
+      width: double.infinity, // Make sure it takes full width of the parent
       decoration: BoxDecoration(
         color: Color(0xFFFFF4E6), // Light background color for job cards
         borderRadius: BorderRadius.circular(10),
+        boxShadow: [
+          // Add consistent shadow if needed for uniformity
+          BoxShadow(
+            color: Colors.black.withOpacity(0.1),
+            blurRadius: 4,
+            offset: Offset(0, 2),
+          ),
+        ],
       ),
       child: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Text(description),
+        child: Align(
+          alignment: Alignment.center, // Align text to the start
+          child: Text(
+            description,
+            style: TextStyle(fontSize: 16),
+            overflow: TextOverflow.ellipsis, // Handle overflow if needed
+          ),
+        ),
       ),
     );
   }
