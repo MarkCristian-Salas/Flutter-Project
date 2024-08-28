@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'profile_page.dart'; // Import the profile page
-import 'notif_page.dart';
+import 'notif_page.dart';   // Import the notification page
+import 'Post_Page.dart';    // Import the PostPage
+import 'job_page.dart';     // Import the JobPage
 
 class HomePage extends StatelessWidget {
   @override
@@ -44,11 +46,11 @@ class HomePage extends StatelessWidget {
               SizedBox(height: 20),
               SectionTitle(title: 'Most Recent Job'),
               SizedBox(height: 10),
-              JobCard(), // Placeholder for the job content
+              JobCard(description: 'Details of the most recent job.'), // Placeholder for the job content
               SizedBox(height: 20),
               SectionTitleWithDropdown(title: 'Category'),
               SizedBox(height: 10),
-              JobCard(), // Placeholder for category content
+              JobCard(description: 'Job details by category.'), // Placeholder for category content
             ],
           ),
         ),
@@ -77,6 +79,28 @@ class HomePage extends StatelessWidget {
         ],
         selectedItemColor: Colors.black, // Bottom nav bar selected item color
         unselectedItemColor: Colors.white,
+        onTap: (index) {
+          switch (index) {
+            case 0:
+              // Currently on HomePage, no navigation needed
+              break;
+            case 1:
+              // Navigate to PostPage when the Post tab is tapped
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => PostPage()),
+              );
+              break;
+            case 2:
+              // Navigate to JobPage when the About Job tab is tapped
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => JobPage()),
+              );
+              break;
+            // Add more cases for other navigation items if needed
+          }
+        },
       ),
     );
   }
@@ -183,6 +207,10 @@ class SectionTitleWithDropdown extends StatelessWidget {
 }
 
 class JobCard extends StatelessWidget {
+  final String description;
+
+  JobCard({required this.description});
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -192,7 +220,10 @@ class JobCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(10),
       ),
       child: Center(
-        child: Text('Job Details Here'),
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Text(description),
+        ),
       ),
     );
   }
