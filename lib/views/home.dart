@@ -158,7 +158,6 @@ class BalanceCard extends StatelessWidget {
                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
             Align(
               alignment: Alignment.centerRight,
-              child: Text('This week', style: TextStyle(color: Colors.grey)),
             ),
           ],
         ),
