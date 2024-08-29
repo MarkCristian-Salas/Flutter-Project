@@ -29,7 +29,7 @@ class _SplashScreenState extends State<SplashScreen>
       curve: Curves.easeInOut,
     );
 
-    _animationController.forward(); // Start the fade-in animation
+    _animationController.forward(); //Fade In ang ferson
 
     Future.delayed(const Duration(seconds: 2), () {
       _animationController.reverse().then((value) {
@@ -74,7 +74,7 @@ class _SplashScreenState extends State<SplashScreen>
         child: Container(
           width: double.infinity,
           decoration: const BoxDecoration(
-            color: Color(0xFFFDE49E), // Replace with any color you prefer
+            color: Color(0xFFFDE49E),
           ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,

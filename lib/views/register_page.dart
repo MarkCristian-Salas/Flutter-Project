@@ -89,7 +89,6 @@ class _RegisterPageState extends State<RegisterPage> {
                       ),
                       onPressed: _agreedToTerms
                           ? () {
-                              // Directly navigate to the home page
                               Get.to(() => HomePage());
                             }
                           : null,

@@ -7,27 +7,27 @@ class InputWidget extends StatelessWidget {
     required this.hintText,
     required this.controller,
     required this.obscureText,
-    this.suffixIcon, // Added suffixIcon parameter
+    this.suffixIcon,
   });
 
   final String hintText;
   final TextEditingController controller;
   final bool obscureText;
-  final Widget? suffixIcon; // Optional suffixIcon
+  final Widget? suffixIcon;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
-        color: Colors.white, // White background to match the new design
+        color: Colors.white,
         borderRadius: BorderRadius.circular(10),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withOpacity(0.2), // Subtle shadow for depth
+            color: Colors.grey.withOpacity(0.2),
             spreadRadius: 2,
             blurRadius: 5,
-            offset: const Offset(0, 3), // Changes position of shadow
+            offset: const Offset(0, 3),
           ),
         ],
       ),
@@ -37,17 +37,17 @@ class InputWidget extends StatelessWidget {
         decoration: InputDecoration(
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
-            borderSide: BorderSide.none, // No visible border
+            borderSide: BorderSide.none,
           ),
           hintText: hintText,
           hintStyle: GoogleFonts.poppins(
-            color: Colors.grey[600], // Light grey hint text
+            color: Colors.grey[600],
           ),
           contentPadding: const EdgeInsets.symmetric(
-              horizontal: 20, vertical: 15), // Padding for comfortable typing
-          suffixIcon: suffixIcon, // Display suffixIcon if provided
+              horizontal: 20, vertical: 15),
+          suffixIcon: suffixIcon,
         ),
-        style: GoogleFonts.poppins(), // Consistent font style
+        style: GoogleFonts.poppins(),
       ),
     );
   }

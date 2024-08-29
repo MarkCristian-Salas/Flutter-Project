@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'profile_page.dart'; // Import the profile page
-import 'notif_page.dart'; // Import the notification page
-import 'home.dart'; // Import the home page
-import 'Post_Page.dart'; // Import the Post page
-import 'job_page.dart'; // Import the Job page
+import 'profile_page.dart';
+import 'notif_page.dart';
+import 'home.dart';
+import 'Post_Page.dart';
+import 'job_page.dart';
 
 class PaymentPage extends StatelessWidget {
   @override
@@ -11,12 +11,11 @@ class PaymentPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Payment'),
-        backgroundColor: Color(0xFFE48F45), // App bar color
+        backgroundColor: Color(0xFFE48F45),
         actions: [
           IconButton(
             icon: Icon(Icons.notifications),
             onPressed: () {
-              // Navigate to NotificationPage when the notification icon is pressed
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => NotificationPage()),
@@ -26,7 +25,6 @@ class PaymentPage extends StatelessWidget {
           IconButton(
             icon: Icon(Icons.person),
             onPressed: () {
-              // Navigate to ProfilePage when the profile icon is pressed
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => ProfilePage()),
@@ -41,19 +39,19 @@ class PaymentPage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              BalanceCard(), // Current balance section, reusing the BalanceCard widget from home.dart
+              BalanceCard(),
               SizedBox(height: 20),
               SectionTitle(title: 'To Pay'),
               SizedBox(height: 10),
               JobCard(
                   description:
-                      'Job post details that need payment.'), // Placeholder for job posts to pay
+                      'Job post details that need payment.'),
               SizedBox(height: 20),
               SectionTitle(title: 'To Receive Payment'),
               SizedBox(height: 10),
               JobCard(
                   description:
-                      'Job post details awaiting payment.'), // Placeholder for job posts to receive payment
+                      'Job post details awaiting payment.'),
             ],
           ),
         ),
@@ -61,7 +59,7 @@ class PaymentPage extends StatelessWidget {
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         backgroundColor: const Color(0xFFE48F45),
-        currentIndex: 3, // Set the current index to 'Payment'
+        currentIndex: 3,
         items: [
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
@@ -80,33 +78,29 @@ class PaymentPage extends StatelessWidget {
             label: 'Payment',
           ),
         ],
-        selectedItemColor: Colors.black, // Bottom nav bar selected item color
+        selectedItemColor: Colors.black,
         unselectedItemColor: Colors.white,
         onTap: (index) {
           switch (index) {
             case 0:
-              // Navigate to HomePage when the Home tab is tapped
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => HomePage()),
               );
               break;
             case 1:
-              // Navigate to PostPage when the Post tab is tapped
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => PostPage()),
               );
               break;
             case 2:
-              // Navigate to JobPage when the About Job tab is tapped
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => JobPage()),
               );
               break;
             case 3:
-              // Currently on PaymentPage, no navigation needed
               break;
           }
         },
@@ -137,10 +131,10 @@ class JobCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 100, // Consistent height for job cards
-      width: double.infinity, // Take full width of the parent
+      height: 100,
+      width: double.infinity,
       decoration: BoxDecoration(
-        color: Color(0xFFFFF4E6), // Light background color for job cards
+        color: Color(0xFFFFF4E6),
         borderRadius: BorderRadius.circular(10),
         boxShadow: [
           BoxShadow(
@@ -153,11 +147,11 @@ class JobCard extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Align(
-          alignment: Alignment.center, // Align text to the center
+          alignment: Alignment.center,
           child: Text(
             description,
             style: TextStyle(fontSize: 16),
-            overflow: TextOverflow.ellipsis, // Handle overflow if needed
+            overflow: TextOverflow.ellipsis,
           ),
         ),
       ),

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'profile_page.dart'; // Import the profile page
-import 'notif_page.dart'; // Import the notification page
-import 'home.dart'; // Import the home page
-import 'post_page.dart'; // Import the post 
+import 'profile_page.dart'; 
+import 'notif_page.dart';
+import 'home.dart';
+import 'post_page.dart';
 import 'payment_page.dart';
 
 class JobPage extends StatelessWidget {
@@ -11,12 +11,11 @@ class JobPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('About Jobs'),
-        backgroundColor: Color(0xFFE48F45), // App bar color
+        backgroundColor: Color(0xFFE48F45), 
         actions: [
           IconButton(
             icon: Icon(Icons.notifications),
             onPressed: () {
-              // Navigate to NotificationPage when the notification icon is pressed
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => NotificationPage()),
@@ -26,7 +25,6 @@ class JobPage extends StatelessWidget {
           IconButton(
             icon: Icon(Icons.person),
             onPressed: () {
-              // Navigate to ProfilePage when the profile icon is pressed
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => ProfilePage()),
@@ -61,7 +59,7 @@ class JobPage extends StatelessWidget {
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         backgroundColor: const Color(0xFFE48F45),
-        currentIndex: 2, // Set current index to 'About Job'
+        currentIndex: 2,
         items: [
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
@@ -85,14 +83,12 @@ class JobPage extends StatelessWidget {
         onTap: (index) {
           switch (index) {
             case 0:
-              // Currently on HomePage, no navigation needed
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => HomePage()),
               );
               break;
             case 1:
-              // Currently on HomePage, no navigation needed
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => PostPage()),
@@ -140,7 +136,7 @@ class JobProgressBar extends StatelessWidget {
             overlayShape: RoundSliderOverlayShape(overlayRadius: 14),
           ),
           child: Slider(
-            value: 0.5, // Example progress value
+            value: 0.5, // Progress Bar Vallue nya
             min: 0.0,
             max: 1.0,
             onChanged: (value) {},
@@ -167,13 +163,12 @@ class JobCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 100, // Set a consistent height
-      width: double.infinity, // Make sure it takes full width of the parent
+      height: 100,
+      width: double.infinity,
       decoration: BoxDecoration(
-        color: Color(0xFFFFF4E6), // Light background color for job cards
+        color: Color(0xFFFFF4E6),
         borderRadius: BorderRadius.circular(10),
         boxShadow: [
-          // Add consistent shadow if needed for uniformity
           BoxShadow(
             color: Colors.black.withOpacity(0.1),
             blurRadius: 4,
@@ -184,11 +179,11 @@ class JobCard extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Align(
-          alignment: Alignment.center, // Align text to the start
+          alignment: Alignment.center,
           child: Text(
             description,
             style: TextStyle(fontSize: 16),
-            overflow: TextOverflow.ellipsis, // Handle overflow if needed
+            overflow: TextOverflow.ellipsis,
           ),
         ),
       ),

@@ -47,8 +47,7 @@ class NotificationPage extends StatelessWidget {
             TextButton(
               child: Text('Proceed'),
               onPressed: () {
-                Navigator.of(context).pop(); // Close the dialog
-                // Navigate to another page
+                Navigator.of(context).pop();
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => AnotherPage()),
@@ -58,7 +57,7 @@ class NotificationPage extends StatelessWidget {
             TextButton(
               child: Text('Close'),
               onPressed: () {
-                Navigator.of(context).pop(); // Close the dialog
+                Navigator.of(context).pop();
               },
             ),
           ],
@@ -92,7 +91,6 @@ List<NotificationItem> notifications = [
     subtitle: 'You have received a new payment',
     message: 'You have received a payment of ₱500.00. Check your balance now!',
   ),
-  // Add more notifications here...
 ];
 
 class AnotherPage extends StatelessWidget {

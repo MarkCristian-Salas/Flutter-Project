@@ -86,7 +86,7 @@ class ProfileHeader extends StatelessWidget {
         CircleAvatar(
           radius: 40,
           backgroundImage: AssetImage(
-              'assets/images/profile.png'), // Placeholder for profile image
+              'assets/images/profile.png'),
         ),
         SizedBox(width: 20),
         Expanded(
@@ -161,7 +161,6 @@ class ProfileInfoRow extends StatelessWidget {
           IconButton(
             icon: Icon(Icons.edit, size: 16),
             onPressed: () {
-              // Implement edit function
             },
           ),
         ],
@@ -240,7 +239,7 @@ class JobCard extends StatelessWidget {
     return Container(
       height: 100,
       decoration: BoxDecoration(
-        color: Color(0xFFFFF4E6), // Light background color for job cards
+        color: Color(0xFFFFF4E6),
         borderRadius: BorderRadius.circular(10),
       ),
       child: Center(

@@ -16,7 +16,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  bool _obscureText = true; // State to manage password visibility
+  bool _obscureText = true; // Password visibilitysm kimpampara
 
   @override
   Widget build(BuildContext context) {
@@ -62,9 +62,7 @@ class _LoginPageState extends State<LoginPage> {
                       controller: _passwordController,
                       suffixIcon: IconButton(
                         icon: Icon(
-                          _obscureText
-                              ? Icons.visibility_off
-                              : Icons.visibility,
+                          _obscureText ? Icons.visibility_off : Icons.visibility,
                           color: Colors.grey,
                         ),
                         onPressed: () {
@@ -85,7 +83,6 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                       ),
                       onPressed: () {
-                        // Navigate directly to HomePage
                         Get.to(() => HomePage());
                       },
                       child: Text(

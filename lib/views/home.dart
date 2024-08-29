@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'profile_page.dart'; // Import the profile page
-import 'notif_page.dart'; // Import the notification page
-import 'post_Page.dart'; // Import the PostPage
-import 'job_page.dart'; // Import the JobPage
+import 'profile_page.dart';
+import 'notif_page.dart';
+import 'post_Page.dart';
+import 'job_page.dart';
 import 'payment_page.dart';
 
 class HomePage extends StatelessWidget {
@@ -11,12 +11,11 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Home'),
-        backgroundColor: Color(0xFFE48F45), // App bar color
+        backgroundColor: Color(0xFFE48F45),
         actions: [
           IconButton(
             icon: Icon(Icons.notifications),
             onPressed: () {
-              // Navigate to NotificationPage when the notification icon is pressed
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => NotificationPage()),
@@ -26,7 +25,6 @@ class HomePage extends StatelessWidget {
           IconButton(
             icon: Icon(Icons.person),
             onPressed: () {
-              // Navigate to ProfilePage when the profile icon is pressed
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => ProfilePage()),
@@ -49,13 +47,13 @@ class HomePage extends StatelessWidget {
               SizedBox(height: 10),
               JobCard(
                   description:
-                      'Details of the most recent job.'), // Placeholder for the job content
+                      'Details of the most recent job.'),
               SizedBox(height: 20),
               SectionTitleWithDropdown(title: 'Category'),
               SizedBox(height: 10),
               JobCard(
                   description:
-                      'Job details by category.'), // Placeholder for category content
+                      'Job details by category.'),
             ],
           ),
         ),
@@ -82,7 +80,7 @@ class HomePage extends StatelessWidget {
             label: 'Payment',
           ),
         ],
-        selectedItemColor: Colors.black, // Bottom nav bar selected item color
+        selectedItemColor: Colors.black,
         unselectedItemColor: Colors.white,
         onTap: (index) {
           switch (index) {
@@ -90,7 +88,6 @@ class HomePage extends StatelessWidget {
               // Currently on HomePage, no navigation needed
               break;
             case 1:
-              // Navigate to PostPage when the Post tab is tapped
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => PostPage()),
@@ -138,7 +135,7 @@ class SearchAndFilter extends StatelessWidget {
         IconButton(
           icon: Icon(Icons.filter_list),
           onPressed: () {
-            Scaffold.of(context).openDrawer(); // Open drawer for filtering
+            Scaffold.of(context).openDrawer();
           },
         ),
       ],
@@ -208,7 +205,7 @@ class SectionTitleWithDropdown extends StatelessWidget {
           }).toList(),
           onChanged: (_) {},
           icon: Icon(Icons.arrow_drop_down),
-          underline: SizedBox(), // Removes the underline
+          underline: SizedBox(),
         ),
       ],
     );
@@ -225,7 +222,7 @@ class JobCard extends StatelessWidget {
     return Container(
       height: 100,
       decoration: BoxDecoration(
-        color: Color(0xFFFFF4E6), // Light background color for job cards
+        color: Color(0xFFFFF4E6),
         borderRadius: BorderRadius.circular(10),
       ),
       child: Center(
