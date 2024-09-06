@@ -16,7 +16,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  bool _obscureText = true; // Password visibilitysm kimpampara
+  bool _obscureText = true; // Password visibility
 
   @override
   Widget build(BuildContext context) {
@@ -50,19 +50,23 @@ class _LoginPageState extends State<LoginPage> {
                       style: GoogleFonts.poppins(fontSize: 16),
                     ),
                     const SizedBox(height: 30),
+                    // Email Input
                     InputWidget(
                       hintText: 'Email',
                       obscureText: false,
                       controller: _emailController,
                     ),
                     const SizedBox(height: 20),
+                    // Password Input
                     InputWidget(
                       hintText: 'Password',
                       obscureText: _obscureText,
                       controller: _passwordController,
                       suffixIcon: IconButton(
                         icon: Icon(
-                          _obscureText ? Icons.visibility_off : Icons.visibility,
+                          _obscureText
+                              ? Icons.visibility_off
+                              : Icons.visibility,
                           color: Colors.grey,
                         ),
                         onPressed: () {
@@ -83,7 +87,7 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                       ),
                       onPressed: () {
-                        Get.to(() => HomePage());
+                        Get.to(() => const HomePage());
                       },
                       child: Text(
                         'Login',

@@ -1,68 +1,138 @@
 import 'package:flutter/material.dart';
 import 'profile_page.dart';
 import 'notif_page.dart';
-import 'post_Page.dart';
+import 'post_page.dart';
 import 'job_page.dart';
 import 'payment_page.dart';
+import 'job_detail.dart';
 
 class HomePage extends StatelessWidget {
+  const HomePage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Home'),
-        backgroundColor: Color(0xFFE48F45),
+        title: const Row(
+          children: [
+            SizedBox(width: 16),
+            Text(
+              'Home',
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
+            ),
+          ],
+        ),
+        backgroundColor: const Color.fromARGB(255, 3, 169, 244),
+        automaticallyImplyLeading: false,
         actions: [
           IconButton(
-            icon: Icon(Icons.notifications),
+            icon: const Icon(Icons.notifications, color: Colors.white),
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => NotificationPage()),
+                MaterialPageRoute(
+                    builder: (context) => const NotificationPage()),
               );
             },
           ),
           IconButton(
-            icon: Icon(Icons.person),
+            icon: const Icon(Icons.person, color: Colors.white),
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => ProfilePage()),
+                MaterialPageRoute(builder: (context) => const ProfilePage()),
               );
             },
           ),
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SearchAndFilter(),
-              SizedBox(height: 20),
-              BalanceCard(),
-              SizedBox(height: 20),
-              SectionTitle(title: 'Most Recent Job'),
-              SizedBox(height: 10),
-              JobCard(
-                  description:
-                      'Details of the most recent job.'),
-              SizedBox(height: 20),
-              SectionTitleWithDropdown(title: 'Category'),
-              SizedBox(height: 10),
-              JobCard(
-                  description:
-                      'Job details by category.'),
-            ],
+      backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+      body: CustomScrollView(
+        slivers: [
+          SliverToBoxAdapter(
+            child: Padding(
+              padding:
+                  const EdgeInsets.all(16.0), // Padding for the whole content
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SearchAndFilter(),
+                  const SizedBox(height: 20),
+                  const BalanceCard(),
+                  const SizedBox(height: 20),
+                  const SectionTitle(title: 'Most Recent Job'),
+                  const SizedBox(height: 10),
+                  SizedBox(
+                    height: 150,
+                    child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: 10,
+                      itemBuilder: (context, index) {
+                        return Padding(
+                          padding: const EdgeInsets.only(right: 10),
+                          child: JobCard(
+                            jobTitle: 'Recent Job Title ${index + 1}',
+                            jobDescription:
+                                'Details of the most recent job ${index + 1}.',
+                            showAddButton: false,
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const JobDetailPage(
+                                          jobTitle: '',
+                                          jobDescription: '',
+                                        )),
+                              );
+                            },
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  const SectionTitleWithDropdown(title: 'Category'),
+                  const SizedBox(height: 10),
+                ],
+              ),
+            ),
           ),
-        ),
+          SliverList(
+            delegate: SliverChildBuilderDelegate(
+              (context, index) {
+                return Padding(
+                  padding: const EdgeInsets.only(bottom: 16.0),
+                  child: JobCard(
+                    jobTitle: 'Job Category Title',
+                    jobDescription: 'Job details by category.',
+                    showAddButton: true,
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const JobDetailPage(
+                                  jobTitle: '',
+                                  jobDescription: '',
+                                )),
+                      );
+                    },
+                  ),
+                );
+              },
+              childCount: 10,
+            ),
+          ),
+        ],
       ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
-        backgroundColor: const Color(0xFFE48F45),
+        backgroundColor: const Color.fromARGB(255, 255, 255, 255),
         currentIndex: 0,
-        items: [
+        items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
             label: 'Home',
@@ -81,28 +151,27 @@ class HomePage extends StatelessWidget {
           ),
         ],
         selectedItemColor: Colors.black,
-        unselectedItemColor: Colors.white,
+        unselectedItemColor: Colors.lightBlue,
         onTap: (index) {
           switch (index) {
             case 0:
-              // Currently on HomePage, no navigation needed
               break;
             case 1:
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => PostPage()),
+                MaterialPageRoute(builder: (context) => const PostPage()),
               );
               break;
             case 2:
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => JobPage()),
+                MaterialPageRoute(builder: (context) => const JobPage()),
               );
               break;
             case 3:
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => PaymentPage()),
+                MaterialPageRoute(builder: (context) => const PaymentPage()),
               );
               break;
           }
@@ -113,52 +182,75 @@ class HomePage extends StatelessWidget {
 }
 
 class SearchAndFilter extends StatelessWidget {
+  const SearchAndFilter({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Expanded(
-          child: TextField(
-            decoration: InputDecoration(
-              hintText: 'Search',
-              prefixIcon: Icon(Icons.search),
-              filled: true,
-              fillColor: Colors.grey[200],
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10),
-                borderSide: BorderSide.none,
+    return Padding(
+      padding: const EdgeInsets.only(top: 0.0),
+      child: Row(
+        children: [
+          Expanded(
+            child: TextField(
+              style: const TextStyle(fontSize: 14),
+              decoration: InputDecoration(
+                hintText: 'Search',
+                hintStyle: const TextStyle(fontSize: 14),
+                prefixIcon: const Icon(Icons.search, size: 20),
+                contentPadding: const EdgeInsets.symmetric(vertical: 10.0),
+                filled: true,
+                fillColor: Colors.grey[200],
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                  borderSide: BorderSide.none,
+                ),
               ),
             ),
           ),
-        ),
-        SizedBox(width: 10),
-        IconButton(
-          icon: Icon(Icons.filter_list),
-          onPressed: () {
-            Scaffold.of(context).openDrawer();
-          },
-        ),
-      ],
+          const SizedBox(width: 0),
+          IconButton(
+            icon: const Icon(Icons.filter_list, size: 20),
+            onPressed: () {
+              Scaffold.of(context).openDrawer();
+            },
+          ),
+        ],
+      ),
     );
   }
 }
 
 class BalanceCard extends StatelessWidget {
+  const BalanceCard({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return Card(
-      color: Color(0xFFFFF4E6),
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
+    return Container(
+      height: 130,
+      width: double.infinity,
+      decoration: BoxDecoration(
+        color: const Color.fromARGB(255, 3, 169, 244),
+        borderRadius: BorderRadius.circular(10),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.2),
+            blurRadius: 4,
+            offset: const Offset(0, 2),
+          ),
+        ],
+      ),
+      child: const Padding(
+        padding: EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Current Balance:', style: TextStyle(fontSize: 18)),
-            Text('₱ = 0.00',
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
-            Align(
-              alignment: Alignment.centerRight,
-            ),
+            Text('Current Balance:',
+                style: TextStyle(fontSize: 18, color: Colors.white)),
+            Text('₱ 23,587',
+                style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white)),
           ],
         ),
       ),
@@ -169,13 +261,13 @@ class BalanceCard extends StatelessWidget {
 class SectionTitle extends StatelessWidget {
   final String title;
 
-  SectionTitle({required this.title});
+  const SectionTitle({super.key, required this.title});
 
   @override
   Widget build(BuildContext context) {
     return Text(
       title,
-      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+      style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
     );
   }
 }
@@ -183,7 +275,7 @@ class SectionTitle extends StatelessWidget {
 class SectionTitleWithDropdown extends StatelessWidget {
   final String title;
 
-  SectionTitleWithDropdown({required this.title});
+  const SectionTitleWithDropdown({super.key, required this.title});
 
   @override
   Widget build(BuildContext context) {
@@ -192,7 +284,7 @@ class SectionTitleWithDropdown extends StatelessWidget {
       children: [
         Text(
           title,
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
         ),
         DropdownButton<String>(
           items:
@@ -203,8 +295,8 @@ class SectionTitleWithDropdown extends StatelessWidget {
             );
           }).toList(),
           onChanged: (_) {},
-          icon: Icon(Icons.arrow_drop_down),
-          underline: SizedBox(),
+          icon: const Icon(Icons.arrow_drop_down),
+          underline: const SizedBox(),
         ),
       ],
     );
@@ -212,22 +304,69 @@ class SectionTitleWithDropdown extends StatelessWidget {
 }
 
 class JobCard extends StatelessWidget {
-  final String description;
+  final String jobTitle;
+  final String jobDescription;
+  final VoidCallback onTap;
+  final bool showAddButton;
 
-  JobCard({required this.description});
+  const JobCard({
+    super.key,
+    required this.jobTitle,
+    required this.jobDescription,
+    required this.onTap,
+    this.showAddButton = false,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 100,
-      decoration: BoxDecoration(
-        color: Color(0xFFFFF4E6),
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Text(description),
+    return GestureDetector(
+      onTap: onTap,
+      child: Card(
+        color: const Color.fromARGB(255, 255, 255, 255),
+        child: Stack(
+          children: [
+            SizedBox(
+              height: 100,
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      jobTitle,
+                      style: const TextStyle(
+                          fontSize: 16, fontWeight: FontWeight.bold),
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      jobDescription,
+                      style: const TextStyle(fontSize: 14),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            if (showAddButton)
+              Positioned(
+                right: 15,
+                top: 35,
+                child: Container(
+                  height: 30,
+                  width: 30,
+                  decoration: const BoxDecoration(
+                    color: Colors.lightBlue,
+                    shape: BoxShape.circle,
+                  ),
+                  child: const Center(
+                    child: Icon(
+                      Icons.add,
+                      color: Colors.white,
+                      size: 20,
+                    ),
+                  ),
+                ),
+              ),
+          ],
         ),
       ),
     );

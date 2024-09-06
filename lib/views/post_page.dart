@@ -1,74 +1,133 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
-class PostPage extends StatelessWidget {
+class PostPage extends StatefulWidget {
+  const PostPage({super.key});
+
+  @override
+  PostPageState createState() => PostPageState();
+}
+
+class PostPageState extends State<PostPage> {
+  final _formKey = GlobalKey<FormState>();
+  final TextEditingController _locationController = TextEditingController();
+  final TextEditingController _professionController = TextEditingController();
+  final TextEditingController _rewardController = TextEditingController();
+  final TextEditingController _descriptionController = TextEditingController();
+  final TextEditingController _contactController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+
+  XFile? _image;
+
+  Future<void> _pickImage() async {
+    final ImagePicker picker = ImagePicker();
+    final XFile? image = await picker.pickImage(source: ImageSource.gallery);
+    setState(() {
+      _image = image;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Post'),
-        backgroundColor: Color(0xFFE48F45),
+        title: const Text(
+          'Post a New Job',
+          style: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+          ),
+        ),
+        backgroundColor: Colors.lightBlueAccent,
+        elevation: 0,
+        centerTitle: true,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () {
             Navigator.pop(context);
           },
         ),
       ),
+      backgroundColor: Colors.grey[100],
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _buildTextField('Location'),
-              SizedBox(height: 20),
-              _buildTextField('Profession'),
-              SizedBox(height: 20),
-              _buildTextField('Reward'),
-              SizedBox(height: 20),
-              _buildTextField('Description', maxLines: 5),
-              SizedBox(height: 20),
-              _buildAttachmentSection(),
-            ],
+          child: Form(
+            key: _formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _buildTextField(_locationController, 'Location'),
+                const SizedBox(height: 16),
+                _buildTextField(_professionController, 'Profession'),
+                const SizedBox(height: 16),
+                _buildTextField(_rewardController, 'Reward'),
+                const SizedBox(height: 16),
+                _buildTextField(
+                  _descriptionController,
+                  'Description',
+                  maxLines: 5,
+                ),
+                const SizedBox(height: 16),
+                _buildTextField(_contactController, 'Contact Number'),
+                const SizedBox(height: 16),
+                _buildTextField(_emailController, 'Email Address'),
+                const SizedBox(height: 20),
+                _buildAttachmentSection(),
+                const SizedBox(height: 20),
+                Center(
+                  child: ElevatedButton(
+                    onPressed: () {
+                      if (_formKey.currentState?.validate() ?? false) {
+                        // Handle form submission
+                      }
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.lightBlueAccent,
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 15, horizontal: 30),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                    ),
+                    child: const Text(
+                      'Post Job',
+                      style: TextStyle(fontSize: 18, color: Colors.white),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
-        ),
-      ),
-      bottomNavigationBar: BottomAppBar(
-        color: Color(0xFFE48F45),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            IconButton(
-              icon: Icon(Icons.attach_file, color: Colors.white),
-              onPressed: () {
-              },
-            ),
-            TextButton(
-              onPressed: () {
-              },
-              child: Text(
-                'Post',
-                style: TextStyle(color: Colors.white, fontSize: 18),
-              ),
-            ),
-          ],
         ),
       ),
     );
   }
 
-  Widget _buildTextField(String label, {int maxLines = 1}) {
-    return TextField(
+  Widget _buildTextField(TextEditingController controller, String label,
+      {int maxLines = 1}) {
+    return TextFormField(
+      controller: controller,
       maxLines: maxLines,
       decoration: InputDecoration(
         labelText: label,
         filled: true,
-        fillColor: Color(0xFFFFF4E6),
+        fillColor: Colors.white,
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(12),
           borderSide: BorderSide.none,
         ),
+        contentPadding:
+            const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       ),
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return 'Please enter $label';
+        }
+        return null;
+      },
     );
   }
 
@@ -76,21 +135,61 @@ class PostPage extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
+        const Text(
           'Attachments',
-          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
         ),
-        SizedBox(height: 10),
-        Container(
-          height: 100,
-          decoration: BoxDecoration(
-            color: Color(0xFFFFF4E6),
-            borderRadius: BorderRadius.circular(10),
-          ),
-          child: Center(
-            child: Text('No attachments yet'),
-          ),
-        ),
+        const SizedBox(height: 10),
+        _image == null
+            ? GestureDetector(
+                onTap: _pickImage,
+                child: Container(
+                  height: 100,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(12),
+                    border: Border.all(color: Colors.grey, width: 1),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.1),
+                        blurRadius: 4,
+                        offset: const Offset(0, 2),
+                      ),
+                    ],
+                  ),
+                  child: const Center(
+                    child: Text(
+                      'Tap to upload a photo',
+                      style: TextStyle(color: Colors.grey),
+                    ),
+                  ),
+                ),
+              )
+            : Stack(
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(12),
+                    child: Image.file(
+                      File(_image!.path),
+                      height: 100,
+                      width: double.infinity,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  Positioned(
+                    right: 8,
+                    top: 8,
+                    child: IconButton(
+                      icon: const Icon(Icons.cancel, color: Colors.red),
+                      onPressed: () {
+                        setState(() {
+                          _image = null;
+                        });
+                      },
+                    ),
+                  ),
+                ],
+              ),
       ],
     );
   }

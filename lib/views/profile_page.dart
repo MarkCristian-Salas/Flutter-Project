@@ -1,51 +1,126 @@
 import 'package:flutter/material.dart';
+import 'package:login/views/post_job_detail.dart';
 
 class ProfilePage extends StatelessWidget {
+  const ProfilePage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Profile'),
-        backgroundColor: Color(0xFFE48F45),
+        title: const Text(
+          'Profile',
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+          ),
+        ),
+        backgroundColor: Colors.lightBlue,
+        elevation: 0,
+        centerTitle: true,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: Colors.white),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
         actions: [
           IconButton(
-            icon: Icon(Icons.menu),
+            icon: const Icon(Icons.menu, color: Colors.white),
             onPressed: () {},
           ),
         ],
       ),
+      backgroundColor: Colors.white,
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(15.0),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            ProfileHeader(),
-            SizedBox(height: 20),
-            SectionTitle(
-                title: 'Bio',
-                onEdit: () {
-                  _showEditDialog(
-                      context, 'Edit Bio', 'Bio', 'Muli ay iyong pagbigyan...');
-                }),
-            SizedBox(height: 10),
-            BioCard(),
-            SizedBox(height: 20),
-            SectionWithSeeAll(title: 'Completed Jobs'),
-            SizedBox(height: 10),
-            JobCard(),
-            SizedBox(height: 20),
-            SectionWithSeeAll(title: 'Posted Job'),
-            SizedBox(height: 10),
-            JobCard(),
+            const ProfileHeader(),
+            const SizedBox(height: 30),
+            _buildSection(
+              context,
+              'Bio',
+              const BioCard(),
+              onEdit: () {
+                _showEditDialog(
+                    context, 'Edit Bio', 'Bio', 'Muli ay iyong pagbigyan...');
+              },
+            ),
+            const SizedBox(height: 30),
+            _buildSection(
+              context,
+              'Completed Jobs',
+              const JobCard(),
+              seeAll: () {
+                // Navigate to see all completed jobs
+              },
+            ),
+            const SizedBox(height: 30),
+            _buildSection(
+              context,
+              'Posted Jobs',
+              const JobCard(),
+              seeAll: () {
+                // Navigate to see all posted jobs
+              },
+            ),
           ],
         ),
       ),
     );
   }
 
+  Widget _buildSection(BuildContext context, String title, Widget content,
+      {VoidCallback? onEdit, VoidCallback? seeAll}) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              title,
+              style: const TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.bold,
+                color: Colors.black87,
+              ),
+            ),
+            Row(
+              children: [
+                if (onEdit != null)
+                  IconButton(
+                    icon: const Icon(Icons.edit,
+                        size: 20, color: Colors.blueAccent),
+                    onPressed: onEdit,
+                  ),
+                if (seeAll != null)
+                  TextButton(
+                    onPressed: seeAll,
+                    child: const Text(
+                      'See All',
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.blueAccent,
+                      ),
+                    ),
+                  ),
+              ],
+            ),
+          ],
+        ),
+        const SizedBox(height: 10),
+        content,
+      ],
+    );
+  }
+
   void _showEditDialog(
       BuildContext context, String title, String field, String initialValue) {
-    final TextEditingController _controller =
+    final TextEditingController controller =
         TextEditingController(text: initialValue);
     showDialog(
       context: context,
@@ -53,7 +128,7 @@ class ProfilePage extends StatelessWidget {
         return AlertDialog(
           title: Text(title),
           content: TextField(
-            controller: _controller,
+            controller: controller,
             decoration: InputDecoration(labelText: field),
             maxLines: null,
           ),
@@ -62,14 +137,14 @@ class ProfilePage extends StatelessWidget {
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text('Cancel'),
+              child: const Text('Cancel'),
             ),
             ElevatedButton(
               onPressed: () {
                 // Handle save action
                 Navigator.of(context).pop();
               },
-              child: Text('Save'),
+              child: const Text('Save'),
             ),
           ],
         );
@@ -79,89 +154,126 @@ class ProfilePage extends StatelessWidget {
 }
 
 class ProfileHeader extends StatelessWidget {
+  const ProfileHeader({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return Row(
+    return Column(
       children: [
-        CircleAvatar(
-          radius: 40,
-          backgroundImage: AssetImage(
-              'assets/images/profile.png'),
-        ),
-        SizedBox(width: 20),
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Marvin John D. Macam',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+        Stack(
+          children: [
+            // Profile image
+            const CircleAvatar(
+              radius: 60,
+              backgroundImage: AssetImage('assets/images/profile.png'),
+              backgroundColor: Colors.lightBlue,
+              child: Icon(Icons.person, color: Colors.white, size: 60),
+            ),
+            // Profile icon
+            Positioned(
+              bottom: 0,
+              right: 0,
+              child: Container(
+                decoration: const BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.lightBlue,
+                ),
+                child: IconButton(
+                  icon: const Icon(Icons.camera_alt, color: Colors.white),
+                  onPressed: () {
+                    // Add action here
+                  },
+                ),
               ),
-              SizedBox(height: 10),
-              ProfileInfoCard(),
-            ],
+            ),
+          ],
+        ),
+        const SizedBox(height: 20),
+        const Text(
+          'Marvin John D. Macam',
+          style: TextStyle(
+            fontSize: 28,
+            fontWeight: FontWeight.bold,
+            color: Colors.black87,
           ),
         ),
+        const SizedBox(height: 10),
+        const ProfileInfoCard(),
       ],
     );
   }
 }
 
 class ProfileInfoCard extends StatelessWidget {
+  const ProfileInfoCard({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(16.0),
+      margin: const EdgeInsets.symmetric(horizontal: 5.0),
       decoration: BoxDecoration(
-        color: Color(0xFFFFF4E6),
-        borderRadius: BorderRadius.circular(10),
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.2),
+            blurRadius: 4,
+            offset: const Offset(0, 2),
+          ),
+        ],
       ),
-      child: Column(
+      child: const Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          ProfileInfoRow(label: 'Location', value: 'Mangaldan'),
-          ProfileInfoRow(
-              label: 'Contact Information',
-              value:
-                  'Email: marvin@gmail.com\nNumber: 09123456789\nFB: facebook.com/marvin'),
-          ProfileInfoRow(label: 'Profession', value: 'Electrician'),
+          ProfileInfoRow(label: 'Location:', value: ''),
+          ProfileInfoRow(label: 'Contact:', value: ''),
+          ProfileInfoRow(label: 'Profession', value: ''),
         ],
       ),
     );
   }
 }
 
+// Rest of the code remains the same for BioCard, ProfileInfoRow, and JobCard
+
 class ProfileInfoRow extends StatelessWidget {
   final String label;
   final String value;
 
-  ProfileInfoRow({required this.label, required this.value});
+  const ProfileInfoRow({super.key, required this.label, required this.value});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 8.0),
+      padding: const EdgeInsets.only(bottom: 12.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Expanded(
             child: Text(
               label,
-              style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+              style: const TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w600,
+                color: Colors.black54,
+              ),
             ),
           ),
           Expanded(
             flex: 2,
             child: Text(
               value,
-              style: TextStyle(fontSize: 14),
+              style: const TextStyle(
+                fontSize: 16,
+                color: Colors.black87,
+              ),
               textAlign: TextAlign.right,
             ),
           ),
           IconButton(
-            icon: Icon(Icons.edit, size: 16),
-            onPressed: () {
-            },
+            icon: const Icon(Icons.edit, size: 20, color: Colors.blueAccent),
+            onPressed: () {},
           ),
         ],
       ),
@@ -173,7 +285,7 @@ class SectionTitle extends StatelessWidget {
   final String title;
   final VoidCallback onEdit;
 
-  SectionTitle({required this.title, required this.onEdit});
+  const SectionTitle({super.key, required this.title, required this.onEdit});
 
   @override
   Widget build(BuildContext context) {
@@ -182,10 +294,14 @@ class SectionTitle extends StatelessWidget {
       children: [
         Text(
           title,
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          style: const TextStyle(
+            fontSize: 22,
+            fontWeight: FontWeight.bold,
+            color: Colors.black87,
+          ),
         ),
         IconButton(
-          icon: Icon(Icons.edit, size: 16),
+          icon: const Icon(Icons.edit, size: 20, color: Colors.blueAccent),
           onPressed: onEdit,
         ),
       ],
@@ -194,17 +310,30 @@ class SectionTitle extends StatelessWidget {
 }
 
 class BioCard extends StatelessWidget {
+  const BioCard({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(16.0),
+      padding: const EdgeInsets.all(25.0),
       decoration: BoxDecoration(
-        color: Color(0xFFFFF4E6),
-        borderRadius: BorderRadius.circular(10),
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.2),
+            blurRadius: 4,
+            offset: const Offset(0, 2),
+          ),
+        ],
+        borderRadius: BorderRadius.circular(12),
       ),
-      child: Text(
+      child: const Text(
         'Muli ay iyong pagbigyan,\nako\'y nagkamali\nMuli ay iyong patawarin, ako\'y nagsisi\nAlam kong ako\'y nangakong\n\'di na mauulit pa\nAko\'y nagkamali sa\'yo, muli ay patawarin mo',
-        style: TextStyle(fontSize: 14),
+        style: TextStyle(
+          fontSize: 16,
+          color: Colors.black87,
+          height: 1.5,
+        ),
       ),
     );
   }
@@ -213,7 +342,7 @@ class BioCard extends StatelessWidget {
 class SectionWithSeeAll extends StatelessWidget {
   final String title;
 
-  SectionWithSeeAll({required this.title});
+  const SectionWithSeeAll({super.key, required this.title});
 
   @override
   Widget build(BuildContext context) {
@@ -222,11 +351,21 @@ class SectionWithSeeAll extends StatelessWidget {
       children: [
         Text(
           title,
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          style: const TextStyle(
+            fontSize: 22,
+            fontWeight: FontWeight.bold,
+            color: Colors.black87,
+          ),
         ),
         TextButton(
           onPressed: () {},
-          child: Text('See All', style: TextStyle(fontSize: 14)),
+          child: const Text(
+            'See All',
+            style: TextStyle(
+              fontSize: 16,
+              color: Colors.blueAccent,
+            ),
+          ),
         ),
       ],
     );
@@ -234,16 +373,44 @@ class SectionWithSeeAll extends StatelessWidget {
 }
 
 class JobCard extends StatelessWidget {
+  const JobCard({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 100,
-      decoration: BoxDecoration(
-        color: Color(0xFFFFF4E6),
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: Center(
-        child: Text('Job Details Here'),
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => const PostJobDetail(
+                    jobTitle: '',
+                    jobDescription: '',
+                  )),
+        );
+      },
+      child: Container(
+        height: 120,
+        padding: const EdgeInsets.all(20.0),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.2),
+              blurRadius: 4,
+              offset: const Offset(0, 2),
+            ),
+          ],
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: const Center(
+          child: Text(
+            'Job Details Here',
+            style: TextStyle(
+              fontSize: 16,
+              color: Colors.black87,
+            ),
+          ),
+        ),
       ),
     );
   }

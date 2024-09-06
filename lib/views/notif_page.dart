@@ -1,27 +1,35 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-
 
 class NotificationPage extends StatelessWidget {
+  const NotificationPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () {
             Navigator.pop(context);
           },
         ),
-        title: Text('Notification'),
-        backgroundColor: Color(0xFFE48F45),
+        title: const Text(
+          'Notification',
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+          ),
+        ),
+        backgroundColor: Colors.lightBlue,
       ),
       body: ListView.builder(
         padding: const EdgeInsets.all(16.0),
         itemCount: notifications.length,
         itemBuilder: (context, index) {
           return Card(
-            margin: EdgeInsets.only(bottom: 16.0),
+            margin: const EdgeInsets.only(bottom: 16.0),
             child: ListTile(
               title: Text(notifications[index].title),
               subtitle: Text(notifications[index].subtitle),
@@ -45,17 +53,17 @@ class NotificationPage extends StatelessWidget {
           content: Text(notification.message),
           actions: <Widget>[
             TextButton(
-              child: Text('Proceed'),
+              child: const Text('Proceed'),
               onPressed: () {
                 Navigator.of(context).pop();
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => AnotherPage()),
+                  MaterialPageRoute(builder: (context) => const AnotherPage()),
                 );
               },
             ),
             TextButton(
-              child: Text('Close'),
+              child: const Text('Close'),
               onPressed: () {
                 Navigator.of(context).pop();
               },
@@ -94,13 +102,15 @@ List<NotificationItem> notifications = [
 ];
 
 class AnotherPage extends StatelessWidget {
+  const AnotherPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Another Page'),
+        title: const Text('Another Page'),
       ),
-      body: Center(
+      body: const Center(
         child: Text('This is another page'),
       ),
     );

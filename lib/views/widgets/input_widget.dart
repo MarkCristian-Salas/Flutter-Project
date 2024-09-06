@@ -22,6 +22,10 @@ class InputWidget extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(10),
+        border: Border.all(
+          color: const Color.fromARGB(255, 203, 228, 240), // Stroke color
+          width: 1,
+        ),
         boxShadow: [
           BoxShadow(
             color: Colors.grey.withOpacity(0.2),
@@ -43,8 +47,8 @@ class InputWidget extends StatelessWidget {
           hintStyle: GoogleFonts.poppins(
             color: Colors.grey[600],
           ),
-          contentPadding: const EdgeInsets.symmetric(
-              horizontal: 20, vertical: 15),
+          contentPadding:
+              const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
           suffixIcon: suffixIcon,
         ),
         style: GoogleFonts.poppins(),

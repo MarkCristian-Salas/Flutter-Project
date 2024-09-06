@@ -1,66 +1,109 @@
 import 'package:flutter/material.dart';
-import 'profile_page.dart'; 
+import 'profile_page.dart';
 import 'notif_page.dart';
 import 'home.dart';
 import 'post_page.dart';
 import 'payment_page.dart';
+import 'current_job_detail.dart'; // Import the JobDetailPage for current jobs
+import 'pending_job_detail.dart'; // Import the PendingJobDetailPage
 
 class JobPage extends StatelessWidget {
+  const JobPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('About Jobs'),
-        backgroundColor: Color(0xFFE48F45), 
+        title: const Row(
+          children: [
+            SizedBox(width: 16),
+            Text(
+              'About Job',
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
+            ),
+          ],
+        ),
+        backgroundColor: const Color.fromARGB(255, 3, 169, 244),
+        automaticallyImplyLeading: false,
         actions: [
           IconButton(
-            icon: Icon(Icons.notifications),
+            icon: const Icon(Icons.notifications, color: Colors.white),
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => NotificationPage()),
+                MaterialPageRoute(
+                    builder: (context) => const NotificationPage()),
               );
             },
           ),
           IconButton(
-            icon: Icon(Icons.person),
+            icon: const Icon(Icons.person, color: Colors.white),
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => ProfilePage()),
+                MaterialPageRoute(builder: (context) => const ProfilePage()),
               );
             },
           ),
         ],
       ),
+      backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SectionTitle(title: 'Current Job'),
-              SizedBox(height: 10),
-              JobProgressBar(),
-              SizedBox(height: 10),
-              JobCard(description: 'Your current job in progress here.'),
-              SizedBox(height: 20),
-              SectionTitle(title: 'Pending Job/s'),
-              SizedBox(height: 10),
-              JobCard(description: 'Pending job details here.'),
-              SizedBox(height: 20),
-              SectionTitle(title: 'Job/s Posted'),
-              SizedBox(height: 10),
-              JobCard(description: 'Your posted job details here.'),
+              const SectionTitle(title: 'Current Job'),
+              const SizedBox(height: 10),
+              const JobProgressBar(),
+              const SizedBox(height: 10),
+              JobCard(
+                description: 'Your current job in progress here.',
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          const CurrentJobDetailPage(), // Navigate to CurrentJobDetailPage
+                    ),
+                  );
+                },
+              ),
+              const SizedBox(height: 20),
+              const SectionTitle(title: 'Pending Job/s'),
+              const SizedBox(height: 10),
+              JobCard(
+                description: 'Pending job details here.',
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const PendingJobDetailPage(
+                        jobTitle: 'Your Job Title',
+                        jobDescription: 'Your Job Description',
+                      ), // Navigate to PendingJobDetailPage
+                    ),
+                  );
+                },
+              ),
+              const SizedBox(height: 20),
+              const SectionTitle(title: 'Job/s Posted'),
+              const SizedBox(height: 10),
+              const JobCard(description: 'Your posted job details here.'),
             ],
           ),
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
-        backgroundColor: const Color(0xFFE48F45),
+        backgroundColor: const Color.fromARGB(255, 255, 255, 255),
         currentIndex: 2,
-        items: [
+        items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
             label: 'Home',
@@ -79,28 +122,27 @@ class JobPage extends StatelessWidget {
           ),
         ],
         selectedItemColor: Colors.black,
-        unselectedItemColor: Colors.white,
+        unselectedItemColor: Colors.lightBlue,
         onTap: (index) {
           switch (index) {
             case 0:
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => HomePage()),
+                MaterialPageRoute(builder: (context) => const HomePage()),
               );
               break;
             case 1:
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => PostPage()),
+                MaterialPageRoute(builder: (context) => const PostPage()),
               );
               break;
             case 2:
-              
-              break;
+              break; // Stay on JobPage
             case 3:
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => PaymentPage()),
+                MaterialPageRoute(builder: (context) => const PaymentPage()),
               );
               break;
           }
@@ -113,18 +155,20 @@ class JobPage extends StatelessWidget {
 class SectionTitle extends StatelessWidget {
   final String title;
 
-  SectionTitle({required this.title});
+  const SectionTitle({super.key, required this.title});
 
   @override
   Widget build(BuildContext context) {
     return Text(
       title,
-      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+      style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
     );
   }
 }
 
 class JobProgressBar extends StatelessWidget {
+  const JobProgressBar({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -132,17 +176,17 @@ class JobProgressBar extends StatelessWidget {
         SliderTheme(
           data: SliderTheme.of(context).copyWith(
             trackHeight: 5,
-            thumbShape: RoundSliderThumbShape(enabledThumbRadius: 8),
-            overlayShape: RoundSliderOverlayShape(overlayRadius: 14),
+            thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 8),
+            overlayShape: const RoundSliderOverlayShape(overlayRadius: 14),
           ),
           child: Slider(
-            value: 0.5, // Progress Bar Vallue nya
+            value: 0.5, // Progress Bar Value
             min: 0.0,
             max: 1.0,
             onChanged: (value) {},
           ),
         ),
-        Row(
+        const Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text('Start'),
@@ -157,33 +201,38 @@ class JobProgressBar extends StatelessWidget {
 
 class JobCard extends StatelessWidget {
   final String description;
+  final VoidCallback? onTap;
 
-  JobCard({required this.description});
+  const JobCard({super.key, required this.description, this.onTap});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 100,
-      width: double.infinity,
-      decoration: BoxDecoration(
-        color: Color(0xFFFFF4E6),
-        borderRadius: BorderRadius.circular(10),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.1),
-            blurRadius: 4,
-            offset: Offset(0, 2),
-          ),
-        ],
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Align(
-          alignment: Alignment.center,
-          child: Text(
-            description,
-            style: TextStyle(fontSize: 16),
-            overflow: TextOverflow.ellipsis,
+    return GestureDetector(
+      onTap:
+          onTap, // GestureDetector will detect taps and trigger the onTap function.
+      child: Container(
+        height: 100,
+        width: double.infinity,
+        decoration: BoxDecoration(
+          color: const Color.fromARGB(255, 255, 255, 255),
+          borderRadius: BorderRadius.circular(10),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.1),
+              blurRadius: 4,
+              offset: const Offset(0, 2),
+            ),
+          ],
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Align(
+            alignment: Alignment.center,
+            child: Text(
+              description,
+              style: const TextStyle(fontSize: 16),
+              overflow: TextOverflow.ellipsis,
+            ),
           ),
         ),
       ),

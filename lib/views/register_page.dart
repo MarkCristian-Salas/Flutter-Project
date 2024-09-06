@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:login/views/home.dart'; 
+import 'package:login/views/home.dart';
 import 'package:login/views/login_page.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:get/get.dart';
@@ -20,7 +20,7 @@ class _RegisterPageState extends State<RegisterPage> {
   final TextEditingController _confirmpasswordController =
       TextEditingController();
 
-  bool _agreedToTerms = true;
+  final bool _agreedToTerms = true;
 
   @override
   Widget build(BuildContext context) {
@@ -89,7 +89,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       ),
                       onPressed: _agreedToTerms
                           ? () {
-                              Get.to(() => HomePage());
+                              Get.to(() => const HomePage());
                             }
                           : null,
                       child: Text(
