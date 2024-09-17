@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:login/screens/home.dart';
-import 'package:login/screens/login_page.dart';
+import 'package:login/views/login_page.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -37,7 +36,7 @@ class _SplashScreenState extends State<SplashScreen>
         Navigator.of(context).pushReplacement(
           PageRouteBuilder(
             pageBuilder: (context, animation, secondaryAnimation) =>
-                const HomePage(),
+                const LoginPage(),
             transitionsBuilder:
                 (context, animation, secondaryAnimation, child) {
               const begin = Offset(1.0, 0.0);
@@ -86,7 +85,7 @@ class _SplashScreenState extends State<SplashScreen>
                 height: 150,
               ),
               const SizedBox(height: 20),
-              const Text('Community Guild',
+              const Text('Connectify',
                   style: TextStyle(
                     fontStyle: FontStyle.italic,
                     color: Colors.black,

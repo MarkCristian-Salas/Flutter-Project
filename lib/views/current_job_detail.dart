@@ -1,23 +1,14 @@
 import 'package:flutter/material.dart';
 
-class PostJobDetail extends StatefulWidget {
-  const PostJobDetail({
-    super.key,
-    required this.jobTitle,
-    required this.jobDescription,
-  });
-
-  final String jobTitle;
-  final String jobDescription;
+class CurrentJobDetailPage extends StatefulWidget {
+  const CurrentJobDetailPage({super.key});
 
   @override
-  State<PostJobDetail> createState() => _PostJobDetailState();
+  State<CurrentJobDetailPage> createState() => _CurrentJobDetailPageState();
 }
 
-class _PostJobDetailState extends State<PostJobDetail> {
+class _CurrentJobDetailPageState extends State<CurrentJobDetailPage> {
   bool _isExpanded = false;
-
-  void onSelected(BuildContext context, int item) {}
 
   void _toggleExpansion() {
     setState(() {
@@ -30,7 +21,7 @@ class _PostJobDetailState extends State<PostJobDetail> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'Your Post Job',
+          'Job Details',
           style: TextStyle(
             fontSize: 20,
             color: Colors.white,
@@ -49,11 +40,15 @@ class _PostJobDetailState extends State<PostJobDetail> {
         actions: [
           IconButton(
             icon: const Icon(Icons.share, color: Colors.white),
-            onPressed: () {},
+            onPressed: () {
+              // Implement share functionality
+            },
           ),
           PopupMenuButton<int>(
             icon: const Icon(Icons.more_vert, color: Colors.white),
-            onSelected: (item) => onSelected(context, item),
+            onSelected: (item) {
+              // Implement menu item selection
+            },
             itemBuilder: (context) => [
               const PopupMenuItem<int>(value: 0, child: Text('Edit')),
               const PopupMenuItem<int>(value: 1, child: Text('Delete')),
@@ -61,38 +56,34 @@ class _PostJobDetailState extends State<PostJobDetail> {
           ),
         ],
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Stack(
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              height: 180,
+              decoration: const BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [Colors.lightBlueAccent, Colors.blueAccent],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ),
+                borderRadius:
+                    BorderRadius.vertical(bottom: Radius.circular(30)),
+              ),
+              child: Stack(
                 children: [
-                  Container(
-                    height: 180,
-                    decoration: const BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [Colors.lightBlueAccent, Colors.blueAccent],
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                      ),
-                      borderRadius:
-                          BorderRadius.vertical(bottom: Radius.circular(30)),
-                    ),
-                  ),
                   Positioned(
                     top: 28,
                     left: 16,
                     right: 16,
                     child: GestureDetector(
-                      onTap: () {
-                        _toggleExpansion();
-                      },
+                      onTap: _toggleExpansion,
                       child: AnimatedContainer(
                         duration: const Duration(milliseconds: 300),
                         curve: Curves.easeInOut,
-                        height: _isExpanded ? 170 : 120,
+                        height: _isExpanded ? 180 : 120,
                         child: Card(
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(15),
@@ -111,7 +102,8 @@ class _PostJobDetailState extends State<PostJobDetail> {
                                 ),
                               ),
                               Positioned(
-                                left: 72,
+                                left:
+                                    72, // Adjust this value to position text properly
                                 top: 16,
                                 right: 16,
                                 child: Padding(
@@ -121,7 +113,7 @@ class _PostJobDetailState extends State<PostJobDetail> {
                                         CrossAxisAlignment.start,
                                     children: [
                                       const Text(
-                                        'Albert',
+                                        'Marvin John Macam',
                                         style: TextStyle(
                                           fontSize: 20,
                                           fontWeight: FontWeight.bold,
@@ -131,12 +123,12 @@ class _PostJobDetailState extends State<PostJobDetail> {
                                       ),
                                       const SizedBox(height: 5),
                                       const Text(
-                                        'Location: ',
+                                        'Location: Mangaldan Pangasinan',
                                         style: TextStyle(color: Colors.black54),
                                         overflow: TextOverflow.ellipsis,
                                       ),
                                       const Text(
-                                        'Profession: ',
+                                        'Profession: Electrician',
                                         style: TextStyle(color: Colors.black54),
                                         overflow: TextOverflow.ellipsis,
                                       ),
@@ -149,7 +141,7 @@ class _PostJobDetailState extends State<PostJobDetail> {
                                           overflow: TextOverflow.ellipsis,
                                         ),
                                         const Text(
-                                          'Email: example@email.com',
+                                          'Email: example@example.com',
                                           style:
                                               TextStyle(color: Colors.black54),
                                           overflow: TextOverflow.ellipsis,
@@ -167,59 +159,112 @@ class _PostJobDetailState extends State<PostJobDetail> {
                   ),
                 ],
               ),
-              const SizedBox(height: 20),
-              const Text(
-                'Reward: P1000.00',
+            ),
+            const SizedBox(height: 20),
+            const Text(
+              'Reward: P1000.00',
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: Colors.black87,
+              ),
+            ),
+            const SizedBox(height: 10),
+            const ExpansionTile(
+              title: Text(
+                'Job Description',
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
                   color: Colors.black87,
                 ),
               ),
-              const SizedBox(height: 10),
-              const ExpansionTile(
-                title: Text(
-                  'Job Description',
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black87,
+              children: <Widget>[
+                Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Text(
+                    'I need an Electrician that can fix my refrigerator. The reward is still negotiable.',
+                    style: TextStyle(fontSize: 16, color: Colors.black87),
                   ),
                 ),
-                children: <Widget>[
-                  Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: Text(
-                      'I need an Electrician that can fix my refrigerator. The reward is still negotiable.',
-                      style: TextStyle(fontSize: 16, color: Colors.black87),
+              ],
+            ),
+            const SizedBox(height: 20),
+            const JobPhotoCard(),
+            const SizedBox(height: 20),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.pop(context); // Go back to the previous page
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color.fromARGB(255, 245, 238, 238),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 12,
+                      horizontal: 20,
                     ),
                   ),
-                ],
-              ),
-              const SizedBox(height: 20),
-              SizedBox(
-                height: 200,
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: 5,
-                  itemBuilder: (context, index) {
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(15),
-                        child: Image.network(
-                          'https://via.placeholder.com/150',
-                          fit: BoxFit.cover,
-                          width: 150,
-                        ),
-                      ),
-                    );
-                  },
+                  child: const Text(
+                    'Cancel this job',
+                    style: TextStyle(fontSize: 16),
+                  ),
                 ),
-              ),
-            ],
-          ),
+                ElevatedButton(
+                  onPressed: () {
+                    // Implement Start action here
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.lightBlueAccent,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 12,
+                      horizontal: 20,
+                    ),
+                  ),
+                  child: const Text(
+                    'Complete',
+                    style: TextStyle(fontSize: 16, color: Colors.white),
+                  ),
+                ),
+              ],
+            ),
+          ],
         ),
+      ),
+    );
+  }
+}
+
+class JobPhotoCard extends StatelessWidget {
+  const JobPhotoCard({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 200,
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+        itemCount: 5, // Replace with the number of photos
+        itemBuilder: (context, index) {
+          return Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(15),
+              child: Image.network(
+                'https://via.placeholder.com/150', // Replace with actual photo URL
+                fit: BoxFit.cover,
+                width: 150,
+              ),
+            ),
+          );
+        },
       ),
     );
   }

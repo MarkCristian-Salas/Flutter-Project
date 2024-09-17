@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class CompletedJob extends StatefulWidget {
-  const CompletedJob({
+class PostJobDetail extends StatefulWidget {
+  const PostJobDetail({
     super.key,
     required this.jobTitle,
     required this.jobDescription,
@@ -11,13 +11,15 @@ class CompletedJob extends StatefulWidget {
   final String jobDescription;
 
   @override
-  State<CompletedJob> createState() => _CompletedJobState();
+  State<PostJobDetail> createState() => _PostJobDetailState();
 }
 
-class _CompletedJobState extends State<CompletedJob> {
+class _PostJobDetailState extends State<PostJobDetail> {
   bool _isExpanded = false;
 
-  void onSelected(BuildContext context, int item) {}
+  void onSelected(BuildContext context, int item) {
+    // Implement your selection logic here
+  }
 
   void _toggleExpansion() {
     setState(() {
@@ -30,11 +32,11 @@ class _CompletedJobState extends State<CompletedJob> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'Completed Job',
+          'Job Details',
           style: TextStyle(
             fontSize: 20,
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
+            color: Colors.white, // <-- Title color
+            fontWeight: FontWeight.bold, // <-- Title font weight
           ),
         ),
         backgroundColor: Colors.lightBlueAccent,
@@ -43,13 +45,15 @@ class _CompletedJobState extends State<CompletedJob> {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () {
-            Navigator.pop(context);
+            Navigator.pop(context); // <-- Go back to previous page
           },
         ),
         actions: [
           IconButton(
             icon: const Icon(Icons.share, color: Colors.white),
-            onPressed: () {},
+            onPressed: () {
+              // Implement share functionality
+            },
           ),
           PopupMenuButton<int>(
             icon: const Icon(Icons.more_vert, color: Colors.white),
@@ -111,7 +115,8 @@ class _CompletedJobState extends State<CompletedJob> {
                                 ),
                               ),
                               Positioned(
-                                left: 72,
+                                left:
+                                    72, // Adjusted to avoid overlap with CircleAvatar
                                 top: 16,
                                 right: 16,
                                 child: Padding(
@@ -121,7 +126,7 @@ class _CompletedJobState extends State<CompletedJob> {
                                         CrossAxisAlignment.start,
                                     children: [
                                       const Text(
-                                        'Marvin',
+                                        'Name',
                                         style: TextStyle(
                                           fontSize: 20,
                                           fontWeight: FontWeight.bold,
@@ -201,14 +206,14 @@ class _CompletedJobState extends State<CompletedJob> {
                 height: 200,
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
-                  itemCount: 5,
+                  itemCount: 5, // Replace with actual number of photos
                   itemBuilder: (context, index) {
                     return Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 8.0),
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(15),
                         child: Image.network(
-                          'https://via.placeholder.com/150',
+                          'https://via.placeholder.com/150', // Replace with actual photo URL
                           fit: BoxFit.cover,
                           width: 150,
                         ),

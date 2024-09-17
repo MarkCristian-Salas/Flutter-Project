@@ -3,9 +3,9 @@ import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:get_storage/get_storage.dart';
-import 'package:login/restapi/constants.dart';
-import 'package:login/screens/home.dart';
-import '../screens/login_page.dart';
+import 'package:login/constants/constants.dart';
+import 'package:login/views/home.dart';
+import 'package:login/views/login_page.dart';
 
 class AuthenticationController extends GetxController {
   final isLoading = false.obs;
@@ -103,7 +103,7 @@ class AuthenticationController extends GetxController {
             //debugPrint('Registration Successful: $jsonResponse');
             token.value = json.decode(response.body)['token'];
             box.write('token', token.value);
-            Get.offAll(() => const HomePage());
+            Get.offAll(() => HomePage());
           } else {
             var message = jsonResponse['message'] ?? 'Unknown error';
             Get.snackbar(
