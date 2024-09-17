@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class PostJobDetail extends StatefulWidget {
-  const PostJobDetail({
+class CompletedJob extends StatefulWidget {
+  const CompletedJob({
     super.key,
     required this.jobTitle,
     required this.jobDescription,
@@ -11,15 +11,13 @@ class PostJobDetail extends StatefulWidget {
   final String jobDescription;
 
   @override
-  State<PostJobDetail> createState() => _PostJobDetailState();
+  State<CompletedJob> createState() => _CompletedJobState();
 }
 
-class _PostJobDetailState extends State<PostJobDetail> {
+class _CompletedJobState extends State<CompletedJob> {
   bool _isExpanded = false;
 
-  void onSelected(BuildContext context, int item) {
-    // Implement your selection logic here
-  }
+  void onSelected(BuildContext context, int item) {}
 
   void _toggleExpansion() {
     setState(() {
@@ -32,11 +30,11 @@ class _PostJobDetailState extends State<PostJobDetail> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'Job Details',
+          'Completed Job',
           style: TextStyle(
             fontSize: 20,
-            color: Colors.white, // <-- Title color
-            fontWeight: FontWeight.bold, // <-- Title font weight
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
           ),
         ),
         backgroundColor: Colors.lightBlueAccent,
@@ -45,15 +43,13 @@ class _PostJobDetailState extends State<PostJobDetail> {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () {
-            Navigator.pop(context); // <-- Go back to previous page
+            Navigator.pop(context);
           },
         ),
         actions: [
           IconButton(
             icon: const Icon(Icons.share, color: Colors.white),
-            onPressed: () {
-              // Implement share functionality
-            },
+            onPressed: () {},
           ),
           PopupMenuButton<int>(
             icon: const Icon(Icons.more_vert, color: Colors.white),
@@ -115,8 +111,7 @@ class _PostJobDetailState extends State<PostJobDetail> {
                                 ),
                               ),
                               Positioned(
-                                left:
-                                    72, // Adjusted to avoid overlap with CircleAvatar
+                                left: 72,
                                 top: 16,
                                 right: 16,
                                 child: Padding(
@@ -126,7 +121,7 @@ class _PostJobDetailState extends State<PostJobDetail> {
                                         CrossAxisAlignment.start,
                                     children: [
                                       const Text(
-                                        'Name',
+                                        'Marvin',
                                         style: TextStyle(
                                           fontSize: 20,
                                           fontWeight: FontWeight.bold,
@@ -206,14 +201,14 @@ class _PostJobDetailState extends State<PostJobDetail> {
                 height: 200,
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
-                  itemCount: 5, // Replace with actual number of photos
+                  itemCount: 5,
                   itemBuilder: (context, index) {
                     return Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 8.0),
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(15),
                         child: Image.network(
-                          'https://via.placeholder.com/150', // Replace with actual photo URL
+                          'https://via.placeholder.com/150',
                           fit: BoxFit.cover,
                           width: 150,
                         ),

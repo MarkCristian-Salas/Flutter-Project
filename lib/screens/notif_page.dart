@@ -89,8 +89,8 @@ class NotificationItem {
 
 List<NotificationItem> notifications = [
   NotificationItem(
-    title: 'New Job Available',
-    subtitle: 'Check out the new job opportunity',
+    title: 'Someone accepted your job offer',
+    subtitle: 'Check out your job offer.',
     message:
         'A new job in your preferred category has been posted. Check it out now!',
   ),
