@@ -122,7 +122,7 @@ class _PendingJobDetailPageState extends State<PendingJobDetailPage> {
                                         CrossAxisAlignment.start,
                                     children: [
                                       const Text(
-                                        'Marvin John Macam',
+                                        'Mark',
                                         style: TextStyle(
                                           fontSize: 20,
                                           fontWeight: FontWeight.bold,
