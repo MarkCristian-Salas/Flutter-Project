@@ -16,7 +16,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
   void initState() {
     super.initState();
     // Initialize with existing profile data (replace with actual data)
-    _nameController.text = 'John Doe';
+    _nameController.text = 'John';
     _emailController.text = 'johndoe@example.com';
     _bioController.text = 'Bio goes here...';
   }
