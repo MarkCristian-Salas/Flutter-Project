@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
-import 'package:login/controllers/auth_bloc.dart';
+import 'package:login/bloc/auth/auth_bloc.dart';
+import 'package:login/bloc/auth/auth_event.dart';
+import 'package:login/bloc/auth/auth_state.dart';
 import 'package:login/screens/home.dart';
 import 'package:login/screens/register_page.dart';
 import 'package:login/widget/login_and_register/login_register_widget.dart';
+import 'package:http/http.dart' as http;
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
@@ -17,13 +20,12 @@ class LoginPage extends StatelessWidget {
         child: Center(
           child: SingleChildScrollView(
             child: BlocProvider(
-              create: (_) => AuthBloc(),
+              create: (_) => AuthBloc(httpClient: http.Client()),
               child: BlocConsumer<AuthBloc, AuthState>(
                 listener: (context, state) {
                   if (state is AuthSuccess) {
                     Get.off(() => const HomePage());
                   } else if (state is AuthFailure) {
-                    // Handle error state
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(content: Text(state.error)),
                     );
@@ -65,9 +67,10 @@ class LoginPage extends StatelessWidget {
                       AuthWidgets.primaryButton(
                         text: 'Login',
                         onPressed: () {
+                          final authBloc = context.read<AuthBloc>();
                           authBloc.add(LoginRequested(
-                            authBloc.emailController.text,
-                            authBloc.passwordController.text,
+                            email: authBloc.emailController.text,
+                            password: authBloc.passwordController.text,
                           ));
                         },
                       ),
