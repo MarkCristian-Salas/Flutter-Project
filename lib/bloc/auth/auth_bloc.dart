@@ -41,7 +41,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           return;
         }
         final response = await httpClient.post(
-          Uri.parse('http://localhost:3001/api/userSignup'),
+          Uri.parse('https://api-tau-plum.vercel.app/api/userSignup'),
           headers: {'Content-Type': 'application/json'},
           body: json.encode({
             'name': event.name,
@@ -71,7 +71,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           return;
         }
         final response = await httpClient.post(
-          Uri.parse('http://localhost:3001/api/userLogin'),
+          Uri.parse('https://api-tau-plum.vercel.app/api/userLogin'),
           headers: {'Content-Type': 'application/json'},
           body: json.encode({
             'email': event.email,
