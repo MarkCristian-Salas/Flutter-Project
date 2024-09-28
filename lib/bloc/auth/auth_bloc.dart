@@ -4,13 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart' as http;
 import 'package:login/bloc/auth/auth_event.dart';
 import 'package:login/bloc/auth/auth_state.dart';
-
-import 'dart:convert';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:http/http.dart' as http;
-import 'package:login/bloc/auth/auth_event.dart';
-import 'package:login/bloc/auth/auth_state.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {

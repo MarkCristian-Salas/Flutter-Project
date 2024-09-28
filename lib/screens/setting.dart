@@ -76,9 +76,54 @@ class SettingsPage extends StatelessWidget {
               // Navigate to app info page
             },
           ),
+          _buildSettingsTile(
+            icon: Icons.logout_outlined,
+            title: 'Log out',
+            onTap: () {
+              _showLogoutDialog(context);
+            },
+          ),
         ],
       ),
     );
+  }
+
+  // Method to show the logout confirmation dialog
+  void _showLogoutDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Confirm Logout'),
+          content: const Text('Are you sure you want to logout?'),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context)
+                    .pop(); // Close the dialog without logging out
+              },
+              child: const Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () {
+                _logout(context); // Call the logout method
+              },
+              child: const Text('Logout'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  // Method to handle logout
+  void _logout(BuildContext context) {
+    // Perform your logout operation here, such as clearing session, etc.
+    // authBloc.add(LogoutRequested()); // Example logout event with Bloc (if using Bloc)
+
+    // After logout, navigate to login screen or other appropriate page
+    Navigator.of(context)
+        .pushNamedAndRemoveUntil('/login', (Route<dynamic> route) => false);
   }
 
   Widget _buildSectionHeader(String title) {
